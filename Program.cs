@@ -1,5 +1,8 @@
 ﻿using System;
+using System.IO;
+using System.Net;
 using Amazon.DynamoDBv2;
+using Amazon.DynamoDBv2.Model;
 using Microsoft.Extensions.Configuration;
 
 namespace DynamoLab
@@ -9,7 +12,7 @@ namespace DynamoLab
         private static IConfiguration _config;
         static void Main(string[] args)
         {
-             _config = 
+            _config = 
                 new ConfigurationBuilder()
                 .SetBasePath(AppContext.BaseDirectory)
                 .AddJsonFile("appsettings.json")
@@ -18,7 +21,10 @@ namespace DynamoLab
             var options = _config.GetAWSOptions();
             IAmazonDynamoDB client = options.CreateServiceClient<IAmazonDynamoDB>();
 
-            Console.WriteLine("Hello World!");
+            ListTablesResponse response = client.ListTablesAsync().Result;
+
+            Console.WriteLine(response.HttpStatusCode == HttpStatusCode.OK ? "Success" : "Failure");
+            Console.ReadLine();
         }
     }
 }
