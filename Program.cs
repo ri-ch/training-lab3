@@ -1,4 +1,5 @@
 ﻿using System;
+using Amazon.DynamoDBv2;
 using Microsoft.Extensions.Configuration;
 
 namespace DynamoLab
@@ -13,6 +14,9 @@ namespace DynamoLab
                 .SetBasePath(AppContext.BaseDirectory)
                 .AddJsonFile("appsettings.json")
                 .Build();
+
+            var options = _config.GetAWSOptions();
+            IAmazonDynamoDB client = options.CreateServiceClient<IAmazonDynamoDB>();
 
             Console.WriteLine("Hello World!");
         }
