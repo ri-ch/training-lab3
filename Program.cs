@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.Model;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +11,7 @@ namespace DynamoLab
     class Program
     {
         private static IConfiguration _config;
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             _config = 
                 new ConfigurationBuilder()
@@ -21,7 +22,7 @@ namespace DynamoLab
             var options = _config.GetAWSOptions();
             IAmazonDynamoDB client = options.CreateServiceClient<IAmazonDynamoDB>();
 
-            ListTablesResponse response = client.ListTablesAsync().Result;
+            ListTablesResponse response = await client.ListTablesAsync();
 
             Console.WriteLine(response.HttpStatusCode == HttpStatusCode.OK ? "Success" : "Failure");
             Console.ReadLine();
