@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="awssdk.dynamodbv2" Version="3.3.10.3" />
     <PackageReference Include="awssdk.extensions.netcore.setup" Version="3.3.6" />
+    <PackageReference Include="awssdk.s3" Version="3.3.19" />
     <PackageReference Include="microsoft.extensions.configuration" Version="2.1.1" />
     <PackageReference Include="microsoft.extensions.configuration.json" Version="2.1.1" />
   </ItemGroup>
