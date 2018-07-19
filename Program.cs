@@ -19,12 +19,15 @@ namespace DynamoLab
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            var options = _config.GetAWSOptions();
-            IAmazonDynamoDB client = options.CreateServiceClient<IAmazonDynamoDB>();
+            ListTablesResponse response = null;
 
-            ListTablesResponse response = await client.ListTablesAsync();
+            using (var client = _config.GetAWSOptions().CreateServiceClient<IAmazonDynamoDB>())
+            {
+                response = await client.ListTablesAsync();
+            }
 
-            Console.WriteLine(response.HttpStatusCode == HttpStatusCode.OK ? "Success" : "Failure");
+            var output = response != null && response.HttpStatusCode == HttpStatusCode.OK ? "Success" : "Failure";
+            Console.WriteLine(output);
             Console.ReadLine();
         }
     }
